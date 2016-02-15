@@ -1,5 +1,5 @@
 TARGET = a.out
-LIBS = -lglfw -lGL
+LIBS = -lGLEW -lglfw -lGL -lX11 -lpthread -lXrandr -lXi
 CC = clang
 CFLAGS = -Wall
 
