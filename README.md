@@ -3,12 +3,12 @@
 This is my project for [UIUC](http://cs.illinois.edu/)'s CS 241-96.
 
 ## Overview
-I want to write a top-down 3D game in C with OpenGL and GLFW. It should have multiplayer support and involve threading/multiprocessing for performance boosts.
+I want to write an isometric game in C with OpenGL and SDL. It should have multiplayer support and involve threading/multiprocessing for performance boosts.
 
 ## Purpose
 By the end of this project, I plan to:
 
-1. Have an intermediate grasp of OpenGL and GLFW.
+1. Have an intermediate grasp of SDL and OpenGL.
 2. Be able to write tests and use continuous integration with C.
 3. Know how to use threading/multiprocessing to improve performance significantly.
 4. Be able to implement simple networking for games (UDP/TCP)
@@ -24,8 +24,8 @@ I'm the only member of this group. I expect to at least complete a minimum viabl
 
 *Week Number, Task*
 
-1. [✓] Hello, World! OpenGL/GLFW screen
-2. [ ] Basic 3D rendering in OpenGL/GLFW
+1. [✓] Hello, World! SDL/OpenGL screen
+2. [ ] Basic isometric rendering in SDL/OpenGL
 3. [ ] Basic area/map loading and basic demonstration of movement
 4. [ ] Animated movement
 5. [ ] Complete area/map loading (one continuous map)
