@@ -1,85 +1,99 @@
-#ifdef DEBUG
-#define WINDOW_MODE NULL
-#else
-#define WINDOW_MODE glfwGetPrimaryMonitor()
-#endif
-
-#include <GLFW/glfw3.h>
-
+#include <assert.h>
 #include <stdio.h>
-#include <stdlib.h>
 
-void error_callback(int error, const char* description);
-static void key_callback(GLFWwindow* window, int key, int scancode,
-						 int action, int mods);
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+
+#include "main.h"
+#include "utils.h"
+#include "splash_screen.h"
 
 int main() {
-    glfwSetErrorCallback(error_callback);
+	if (init() != 0) {
+		fprintf(stderr, "Failed to initialize game.\n");
+		return EXIT_FAILURE;
+	}
 
-    if(glfwInit() == GL_FALSE) {
-		exit(EXIT_FAILURE);
-    }
+	if (load_assets() != 0) {
+		fprintf(stderr, "Failed to load assets.\n");
+		return EXIT_FAILURE;
+	}
 
-    GLFWwindow* window = glfwCreateWindow(1280, 960,
-										  "Beware The Jabberwock",
-										  WINDOW_MODE, NULL);
-    if(window == NULL) {
-		glfwTerminate();
-		exit(EXIT_FAILURE);
-    }
-    
-    glfwMakeContextCurrent(window);
-    glfwSwapInterval(1);
-    
-    glfwSetKeyCallback(window, key_callback);
+	SDL_Event event;
+	
+	while (exit_SDL == 0) {
 
-    float ratio;
-    int width, height;
-
-    glfwGetFramebufferSize(window, &width, &height);
-    ratio = width / (float) height;
-
-    glViewport(0, 0, width, height);
-    glClear(GL_COLOR_BUFFER_BIT);
-
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glOrtho(-ratio, ratio, -1.f, 1.f, 1.f, -1.f);
-    glMatrixMode(GL_MODELVIEW);
-
-
-    while(!glfwWindowShouldClose(window))
-    {
-		glClear(GL_COLOR_BUFFER_BIT);
-		glLoadIdentity();
-		glRotatef((float) glfwGetTime() * 50.f, 0.f, 0.f, 1.f);
+		poll_events(&event);
+		update();
+		render();
 		
-		glBegin(GL_TRIANGLES);
-		glColor3f(1.f, 0.f, 0.f);
-		glVertex3f(-0.6f, -0.4f, 0.f);
-		glColor3f(0.f, 1.f, 0.f);
-		glVertex3f(0.6f, -0.4f, 0.f);
-		glColor3f(0.f, 0.f, 1.f);
-		glVertex3f(0.f, 0.6f, 0.f);
-		glEnd();	
-		
-		glfwSwapBuffers(window);
-		glfwPollEvents();
-    }
+		SDL_UpdateWindowSurface(window);
 
-    glfwDestroyWindow(window);
-    glfwTerminate();
-    return 0;
+		int ticks = SDL_GetTicks();
+		if (ticks < ticks_per_frame) {
+			SDL_Delay(ticks_per_frame - ticks);
+		}
+	}
+
+    quit();
+	return EXIT_SUCCESS;
 }
 
-static void key_callback(GLFWwindow* window, int key, int scancode,
-						 int action, int mods)
-{
-    if(key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, GL_TRUE);
+int init() {
+	exit_SDL = 0;
+	window = NULL;
+	screen = NULL;
+
+	w_width = 1024;
+	w_height = 768;
+
+	fps = 60;
+	ticks_per_frame = 1000 / fps;
+
+	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+		fprintf(stderr, "SDL failed to initialize.\n");
+		return -1;
+	}
+
+	window = SDL_CreateWindow("Beware The Jabberwock",
+							  SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+							  w_width, w_height, SDL_WINDOW_SHOWN);
+	if (window == NULL) {
+		fprintf(stderr, "SDL failed to create window.\n");
+		return -1;		
+	}
+
+	screen = SDL_GetWindowSurface(window);
+	screen->format->format = SDL_PIXELFORMAT_RGBA8888;
+	if (SDL_BYTEORDER == SDL_BIG_ENDIAN) {
+		screen->format->Amask = 0x000000FF;
+	} else {
+		screen->format->Amask = 0xFF000000;
+	}
+	SDL_FillRect(screen, NULL, SDL_MapRGBA(screen->format, 0x00, 0x00, 0xFF, 0xFF));
+
+	poll_events = splash_screen_poll_events;
+	update = splash_screen_update;
+	render = splash_screen_render;
+
+	return 0;
 }
 
-void error_callback(int error, const char* description)
-{
-    fprintf(stderr, "ERROR!\nError Number: %d\n%s", error, description);
+int load_assets() {
+	int img_flags = IMG_INIT_PNG;
+	if (!(IMG_Init(img_flags) & img_flags)) {
+		fprintf(stderr, "Could not initialize SDL_image.\n");
+		return -1;
+	}
+
+	splash_screen = load_image("../assets/splash_screen/splash_screen.png");
+	if (splash_screen == NULL) return -1;
+	
+	return 0;
+}
+
+void quit() {
+	assert(window);
+	SDL_DestroyWindow(window);
+	SDL_Quit();
 }
