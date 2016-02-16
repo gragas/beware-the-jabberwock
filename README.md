@@ -24,7 +24,7 @@ I'm the only member of this group. I expect to at least complete a minimum viabl
 
 *Week Number, Task*
 
-1. [✓] Hello, World! SDL/OpenGL screen
+1. [x] Hello, World! SDL/OpenGL screen
 2. [ ] Basic isometric rendering in SDL/OpenGL
 3. [ ] Basic area/map loading and basic demonstration of movement
 4. [ ] Animated movement
