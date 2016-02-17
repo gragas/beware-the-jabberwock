@@ -7,7 +7,9 @@ default: CFLAGS += -g -DDEBUG
 default: $(TARGET)
 all: default
 
+release: clean
 release: $(TARGET)
+release: clean_object_files
 
 OBJECTS = $(patsubst %.c, %.o, $(wildcard *.c))
 HEADERS = $(wildcard *.h)
@@ -20,7 +22,15 @@ HEADERS = $(wildcard *.h)
 $(TARGET): $(OBJECTS)
 	$(CC) $(OBJECTS) -Wall $(LIBS) -o $@
 
-clean:
+clean: clean_emacs
+clean: clean_object_files
+clean: clean_target
+
+clean_emacs:
 	-rm *~
+
+clean_object_files:
 	-rm -f *.o
+
+clean_target:
 	-rm -f $(TARGET)
