@@ -11,6 +11,7 @@ void quit();
 SDL_Window* window;
 SDL_Surface* screen;
 int w_width, w_height;
+int delta, ticks;
 int fps, ticks_per_frame;
 int exit_SDL;
 

@@ -8,6 +8,19 @@
 #include "utils.h"
 #include "splash_screen.h"
 
+#ifdef DEBUG
+    #if (DEBUG == 0)
+        #define ASSETS_PATH "assets"
+        #define CONFIG_PATH "config"
+    #else
+        #define ASSETS_PATH "../assets"
+        #define CONFIG_PATH "../config"
+    #endif
+#else
+    #define ASSETS_PATH "assets"
+    #define CONFIG_PATH "config"
+#endif
+
 int main() {
 	if (init() != 0) {
 		fprintf(stderr, "Failed to initialize game.\n");
@@ -18,23 +31,26 @@ int main() {
 		fprintf(stderr, "Failed to load assets.\n");
 		return EXIT_FAILURE;
 	}
-
+	
 	SDL_Event event;
+
+	ticks = 0;
 	
 	while (exit_SDL == 0) {
-
+		
 		poll_events(&event);
 		update();
 		render();
 		
 		SDL_UpdateWindowSurface(window);
-
-		int ticks = SDL_GetTicks();
-		if (ticks < ticks_per_frame) {
-			SDL_Delay(ticks_per_frame - ticks);
+		
+		delta = SDL_GetTicks() - ticks;
+		if (delta < ticks_per_frame) {
+			SDL_Delay(ticks_per_frame - delta);
+			ticks = SDL_GetTicks();
 		}
 	}
-
+	
     quit();
 	return EXIT_SUCCESS;
 }
@@ -44,8 +60,36 @@ int init() {
 	window = NULL;
 	screen = NULL;
 
-	w_width = 1024;
-	w_height = 768;
+	FILE* file = fopen(CONFIG_PATH".txt", "r");
+	if (file == NULL)
+	{
+		w_width = 1024;
+		w_height = 768;
+	}
+	else
+	{
+		char* line_buffer = NULL;
+		size_t nbytes = 0;
+		while(getline(&line_buffer, &nbytes, file) != -1) {
+			char* token = strtok(line_buffer, ":");
+			if (token == NULL) continue;
+			if (strcmp(token, "width") == 0) {
+				token = strtok(NULL, ":");
+				char* endptr = token+strlen(token)-1;
+				long value = strtol(token, &endptr, 10);
+				if (value > 0 && value <= 3840) {
+					w_width = value;
+				}
+			} else if (strcmp(token, "height") == 0) {
+				token = strtok(NULL, ":");
+				char* endptr = token+strlen(token)-1;
+				long value = strtol(token, &endptr, 10);
+				if (value > 0 && value <= 3840) {
+					w_height = value;
+				}
+			}
+		}
+	}
 
 	fps = 60;
 	ticks_per_frame = 1000 / fps;
@@ -86,9 +130,8 @@ int load_assets() {
 		return -1;
 	}
 
-	splash_screen = load_image("../assets/splash_screen/splash_screen.png");
+	splash_screen = load_image(ASSETS_PATH"/splash_screen/splash_screen.png");
 	if (splash_screen == NULL) return -1;
-	
 	return 0;
 }
 

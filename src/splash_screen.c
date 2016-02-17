@@ -3,6 +3,8 @@
 #include "main.h"
 #include "splash_screen.h"
 
+int total_ticks = 0;
+
 void splash_screen_poll_events(SDL_Event* event) {
 	while (SDL_PollEvent(event) != 0) {
 		if (event->type == SDL_QUIT)
@@ -22,7 +24,10 @@ void splash_screen_poll_events(SDL_Event* event) {
 }
 
 void splash_screen_update(void) {
-	
+	total_ticks += delta;
+	if ((total_ticks / ticks_per_frame) / fps >= 3000) {
+		exit(0);
+	}
 }
 
 void splash_screen_render(void) {
