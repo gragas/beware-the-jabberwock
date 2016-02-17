@@ -10,6 +10,7 @@ void quit();
 
 SDL_Window* window;
 SDL_Surface* screen;
+int fullscreen;
 int w_width, w_height;
 int delta, ticks;
 int fps, ticks_per_frame;

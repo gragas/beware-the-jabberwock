@@ -60,13 +60,12 @@ int init() {
 	window = NULL;
 	screen = NULL;
 
+	w_width = 1024;
+	w_height = 768;
+	fullscreen = 0;
+
 	FILE* file = fopen(CONFIG_PATH".txt", "r");
-	if (file == NULL)
-	{
-		w_width = 1024;
-		w_height = 768;
-	}
-	else
+	if (file != NULL)
 	{
 		char* line_buffer = NULL;
 		size_t nbytes = 0;
@@ -75,6 +74,7 @@ int init() {
 			if (token == NULL) continue;
 			if (strcmp(token, "width") == 0) {
 				token = strtok(NULL, ":");
+				if (token == NULL) continue;
 				char* endptr = token+strlen(token)-1;
 				long value = strtol(token, &endptr, 10);
 				if (value > 0 && value <= 3840) {
@@ -82,10 +82,19 @@ int init() {
 				}
 			} else if (strcmp(token, "height") == 0) {
 				token = strtok(NULL, ":");
+				if (token == NULL) continue;
 				char* endptr = token+strlen(token)-1;
 				long value = strtol(token, &endptr, 10);
 				if (value > 0 && value <= 3840) {
 					w_height = value;
+				}
+			} else if (strcmp(token, "fullscreen") == 0) {
+				token = strtok(NULL, ":");
+				if (token == NULL) continue;
+				char* endptr = token+strlen(token)-1;
+				long value = strtol(token, &endptr, 10);
+				if (value != 0) {
+					fullscreen = SDL_WINDOW_FULLSCREEN_DESKTOP;
 				}
 			}
 		}
@@ -101,7 +110,7 @@ int init() {
 
 	window = SDL_CreateWindow("Beware The Jabberwock",
 							  SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-							  w_width, w_height, SDL_WINDOW_SHOWN);
+							  w_width, w_height, SDL_WINDOW_SHOWN | fullscreen);
 	if (window == NULL) {
 		fprintf(stderr, "SDL failed to create window.\n");
 		return -1;		
