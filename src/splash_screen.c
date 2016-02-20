@@ -25,7 +25,7 @@ void splash_screen_poll_events(SDL_Event* event) {
 			switch (event->key.keysym.sym)
 			{
 			case SDLK_ESCAPE:
-				exit_SDL = 1;
+				init_main_menu();
 				break;
 			}
 		}
@@ -36,7 +36,7 @@ void splash_screen_update(void) {
 	/* Keep track of how long the splash screen has been displayed */
 	total_ticks += delta;
 	if ((total_ticks / ticks_per_frame) / fps >= 3000) {
-		exit(0);
+		init_main_menu();
 	}
 	/* End keep track of how long the splash screen has been displayed */
 }
