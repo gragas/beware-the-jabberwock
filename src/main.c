@@ -43,6 +43,7 @@ int main() {
 }
 
 int init() {
+	/* Initialize */
 	exit_SDL = 0;
 	window = NULL;
 	screen = NULL;
@@ -50,7 +51,9 @@ int init() {
 	w_width = 1024;
 	w_height = 768;
 	fullscreen = 0;
+	/* End initialize */
 
+	/* Load options from config file */
 	FILE* file = fopen(CONFIG_PATH".txt", "r");
 	if (file != NULL)
 	{
@@ -86,6 +89,7 @@ int init() {
 			}
 		}
 	}
+	/* End load options from config file */
 
 	fps = 60;
 	ticks_per_frame = 1000 / fps;
@@ -103,6 +107,7 @@ int init() {
 		return -1;		
 	}
 
+	/* Change the screen format from RGB -> RGBA */
 	screen = SDL_GetWindowSurface(window);
 	screen->format->format = SDL_PIXELFORMAT_RGBA8888;
 	if (SDL_BYTEORDER == SDL_BIG_ENDIAN) {
@@ -110,12 +115,10 @@ int init() {
 	} else {
 		screen->format->Amask = 0xFF000000;
 	}
-	SDL_FillRect(screen, NULL, SDL_MapRGBA(screen->format, 0x00, 0x00, 0xFF, 0xFF));
-
-	poll_events = splash_screen_poll_events;
-	update = splash_screen_update;
-	render = splash_screen_render;
-
+	/* End change the screen format from RGB -> RGBA */
+	
+	init_splash_screen();
+	
 	return 0;
 }
 
