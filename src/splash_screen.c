@@ -3,7 +3,16 @@
 #include "main.h"
 #include "splash_screen.h"
 
-int total_ticks = 0;
+void init_splash_screen() {
+	SDL_FillRect(screen, NULL,
+				 SDL_MapRGBA(screen->format,
+							 0x00, 0x00, 0x22, 0xFF));
+	total_ticks = 0;
+	poll_events = splash_screen_poll_events;
+	update = splash_screen_update;
+	render = splash_screen_render;
+
+}
 
 void splash_screen_poll_events(SDL_Event* event) {
 	while (SDL_PollEvent(event) != 0) {
@@ -24,10 +33,12 @@ void splash_screen_poll_events(SDL_Event* event) {
 }
 
 void splash_screen_update(void) {
+	/* Keep track of how long the splash screen has been displayed */
 	total_ticks += delta;
 	if ((total_ticks / ticks_per_frame) / fps >= 3000) {
 		exit(0);
 	}
+	/* End keep track of how long the splash screen has been displayed */
 }
 
 void splash_screen_render(void) {
