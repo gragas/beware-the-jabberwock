@@ -2,6 +2,7 @@
 #include <SDL2/SDL_image.h>
 #include "main.h"
 #include "splash_screen.h"
+#include "main_menu.h"
 
 void init_splash_screen() {
 	SDL_FillRect(screen, NULL,

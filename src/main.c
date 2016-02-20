@@ -7,6 +7,7 @@
 #include "main.h"
 #include "utils.h"
 #include "splash_screen.h"
+#include "main_menu.h"
 
 int main() {
 	if (init() != 0) {
@@ -131,6 +132,11 @@ int load_assets() {
 
 	splash_screen = load_image(ASSETS_PATH"/splash_screen/splash_screen.png");
 	if (splash_screen == NULL) return -1;
+
+	main_menu_debug_button = load_image(
+		ASSETS_PATH"/main_menu/debug_button.png");
+	if (main_menu_debug_button == NULL) return -1;
+
 	return 0;
 }
 
