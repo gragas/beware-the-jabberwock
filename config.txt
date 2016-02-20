@@ -1,3 +1,3 @@
-width:1280
-height:720
-fullscreen:1
+width:1024
+height:768
+fullscreen:0
