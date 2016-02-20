@@ -8,19 +8,6 @@
 #include "utils.h"
 #include "splash_screen.h"
 
-#ifdef DEBUG
-    #if (DEBUG == 0)
-        #define ASSETS_PATH "assets"
-        #define CONFIG_PATH "config"
-    #else
-        #define ASSETS_PATH "../assets"
-        #define CONFIG_PATH "../config"
-    #endif
-#else
-    #define ASSETS_PATH "assets"
-    #define CONFIG_PATH "config"
-#endif
-
 int main() {
 	if (init() != 0) {
 		fprintf(stderr, "Failed to initialize game.\n");
