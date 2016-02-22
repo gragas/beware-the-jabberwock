@@ -1,6 +1,5 @@
 #ifndef _MAIN_H
 #define _MAIN_H
-#endif
 
 #include <SDL2/SDL.h>
 
@@ -32,3 +31,11 @@ int exit_SDL;
 void (*poll_events)(SDL_Event* event);
 void (*update)(void);
 void (*render)(void);
+
+// Assets
+SDL_Surface* main_menu_debug_button_up;
+SDL_Surface* main_menu_debug_button_down;
+SDL_Surface* main_menu_exit_button_up;
+SDL_Surface* main_menu_exit_button_down;
+
+#endif

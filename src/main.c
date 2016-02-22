@@ -133,9 +133,21 @@ int load_assets() {
 	splash_screen = load_image(ASSETS_PATH"/splash_screen/splash_screen.png");
 	if (splash_screen == NULL) return -1;
 
-	main_menu_debug_button = load_image(
+	main_menu_debug_button_up = load_image(
 		ASSETS_PATH"/main_menu/debug_button.png");
-	if (main_menu_debug_button == NULL) return -1;
+	if (main_menu_debug_button_up == NULL) return -1;
+
+	main_menu_debug_button_down = load_image(
+		ASSETS_PATH"/main_menu/debug_button_clicked.png");
+	if (main_menu_debug_button_down == NULL) return -1;
+
+	main_menu_exit_button_up = load_image(
+		ASSETS_PATH"/main_menu/exit_button.png");
+	if (main_menu_exit_button_up == NULL) return -1;
+
+	main_menu_exit_button_down = load_image(
+		ASSETS_PATH"/main_menu/exit_button_clicked.png");
+	if (main_menu_exit_button_down == NULL) return -1;
 
 	return 0;
 }

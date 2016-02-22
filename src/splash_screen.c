@@ -3,6 +3,7 @@
 #include "main.h"
 #include "splash_screen.h"
 #include "main_menu.h"
+#include "button.h"
 
 void init_splash_screen() {
 	SDL_FillRect(screen, NULL,
@@ -12,7 +13,6 @@ void init_splash_screen() {
 	poll_events = splash_screen_poll_events;
 	update = splash_screen_update;
 	render = splash_screen_render;
-
 }
 
 void splash_screen_poll_events(SDL_Event* event) {
