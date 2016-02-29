@@ -10,8 +10,8 @@ void main_menu_render(void);
 void destroy_main_menu();
 
 #define NUM_MAIN_MENU_BUTTONS 2
-button_t* main_menu_buttons[NUM_MAIN_MENU_BUTTONS];
-button_t* main_menu_debug_button;
-button_t* main_menu_exit_button;
+static button_t* buttons[NUM_MAIN_MENU_BUTTONS];
+static button_t* debug_button;
+static button_t* exit_button;
 
 #endif

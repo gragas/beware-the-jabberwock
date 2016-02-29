@@ -8,22 +8,22 @@ void partial_exit(void) { destroy_main_menu(); exit(0); }
 void init_main_menu() {
 	#ifdef DEBUG
       #if (DEBUG == 1)
-	main_menu_debug_button = Button(10, 10,
+	debug_button = Button(10, 10,
 						  main_menu_debug_button_up,
 						  main_menu_debug_button_down,
 						  NULL);
-	main_menu_buttons[0] = main_menu_debug_button;
+	buttons[0] = debug_button;
       #endif
 	#endif
 
-	main_menu_exit_button = Button(w_width / 2, w_height - 50,
-						  main_menu_exit_button_up,
-						  main_menu_exit_button_down,
-								   partial_exit);
-	Button_set_pos(main_menu_exit_button,
-				   main_menu_exit_button->x - main_menu_exit_button->w / 2,
-				   main_menu_exit_button->y);
-	main_menu_buttons[1] = main_menu_exit_button;
+	exit_button = Button(w_width / 2, w_height - 50,
+						 main_menu_exit_button_up,
+						 main_menu_exit_button_down,
+						 partial_exit);
+	Button_set_pos(exit_button,
+				   exit_button->x - exit_button->w / 2,
+				   exit_button->y);
+	buttons[1] = exit_button;
 
 
 	/* background color and main loop functions */
@@ -54,23 +54,23 @@ void main_menu_poll_events(SDL_Event* event)
 		} else if (event->type == SDL_MOUSEBUTTONDOWN) {
 			size_t index;
 			for (index = 0; index < NUM_MAIN_MENU_BUTTONS; index++) {
-				if (main_menu_buttons[index] == NULL) continue;
+				if (buttons[index] == NULL) continue;
 				int mouse_x, mouse_y;
 				SDL_GetMouseState(&mouse_x, &mouse_y);
-				if (Button_within(main_menu_buttons[index], mouse_x, mouse_y)) {
-					Button_press(main_menu_buttons[index]);
+				if (Button_within(buttons[index], mouse_x, mouse_y)) {
+					Button_press(buttons[index]);
 				}
 			}
 		} else if (event->type == SDL_MOUSEBUTTONUP) {
 			size_t index;
 			for (index = 0; index < NUM_MAIN_MENU_BUTTONS; index++) {
-				if (main_menu_buttons[index] == NULL) continue;
+				if (buttons[index] == NULL) continue;
 				int mouse_x, mouse_y;
 				SDL_GetMouseState(&mouse_x, &mouse_y);
-				if (Button_within(main_menu_buttons[index], mouse_x, mouse_y)) {
-					Button_release(main_menu_buttons[index], 1);
+				if (Button_within(buttons[index], mouse_x, mouse_y)) {
+					Button_release(buttons[index], 1);
 				} else {
-					Button_release(main_menu_buttons[index], 0);
+					Button_release(buttons[index], 0);
 				}
 			}			
 		}
@@ -86,17 +86,17 @@ void main_menu_render(void)
 {
 	size_t index;
 	for (index = 0; index < NUM_MAIN_MENU_BUTTONS; index++) {
-		if (main_menu_buttons[index] == NULL) continue;
-		Button_blit(main_menu_buttons[index], screen);
+		if (buttons[index] == NULL) continue;
+		Button_blit(buttons[index], screen);
 	}
 }
 
 void destroy_main_menu() {
 	#ifdef DEBUG
       #if (DEBUG == 1)
-	Button_destroy(main_menu_debug_button);
+	Button_destroy(debug_button);
       #endif
 	#endif
 
-	Button_destroy(main_menu_exit_button);
+	Button_destroy(exit_button);
 }
