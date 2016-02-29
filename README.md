@@ -22,8 +22,6 @@ I'm the only member of this group. I expect to at least complete a minimum viabl
 
 ## Project Milestones
 
-*Task*
-
 - [x] Hello, World! SDL/OpenGL screen
 - [ ] Basic isometric rendering in SDL/OpenGL
 - [ ] Basic area/map loading and basic demonstration of movement
