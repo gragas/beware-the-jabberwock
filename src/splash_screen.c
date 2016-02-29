@@ -45,3 +45,8 @@ void splash_screen_update(void) {
 void splash_screen_render(void) {
 	SDL_BlitSurface(splash_screen, NULL, screen, NULL);
 }
+
+
+void destroy_splash_screen(void) {
+	
+}
