@@ -27,10 +27,10 @@ clean: clean_object_files
 clean: clean_target
 
 clean_emacs:
-	-rm *~
+	rm *~ 2>/dev/null ||:
 
 clean_object_files:
-	-rm -f *.o
+	rm -f *.o 2>/dev/null ||:
 
 clean_target:
-	-rm -f $(TARGET)
+	rm -f $(TARGET) 2>/dev/null ||:
