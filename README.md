@@ -22,20 +22,20 @@ I'm the only member of this group. I expect to at least complete a minimum viabl
 
 ## Project Milestones
 
-*Week Number, Task*
+*Task*
 
-- [x] **1** Hello, World! SDL/OpenGL screen
-- [ ] **2** Basic isometric rendering in SDL/OpenGL
-- [ ] **3** Basic area/map loading and basic demonstration of movement
-- [ ] **4** Animated movement
-- [ ] **5** Complete area/map loading (one continuous map)
-- [ ] **6** Saving/loading
-- [ ] **7** UI/Hotbar, basic stats
-- [ ] **8** Multiplayer/networking support
-- [ ] **9** NPCs
-- [ ] **10** Items
-- [ ] **11** Combat
-- [ ] **12** Additional content (quests, homes, biomes, etc.)
+- [x] Hello, World! SDL/OpenGL screen
+- [ ] Basic isometric rendering in SDL/OpenGL
+- [ ] Basic area/map loading and basic demonstration of movement
+- [ ] Animated movement
+- [ ] Complete area/map loading (one continuous map)
+- [ ] Saving/loading
+- [ ] UI/Hotbar, basic stats
+- [ ] Multiplayer/networking support
+- [ ] NPCs
+- [ ] Items
+- [ ] Combat
+- [ ] Additional content (quests, homes, biomes, etc.)
 
 ## Expected challenges
 I'm not sure how to write tests for graphics. How do we know that graphics are displayed correctly?
