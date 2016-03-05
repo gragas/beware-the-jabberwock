@@ -3,19 +3,6 @@
 
 #include <SDL2/SDL.h>
 
-#ifdef DEBUG
-    #if (DEBUG == 0)
-        #define ASSETS_PATH "assets"
-        #define CONFIG_PATH "config"
-    #else
-        #define ASSETS_PATH "../assets"
-        #define CONFIG_PATH "../config"
-    #endif
-#else
-    #define ASSETS_PATH "assets"
-    #define CONFIG_PATH "config"
-#endif
-
 int init();
 int load_assets();
 void quit();

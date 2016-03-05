@@ -1,20 +1,32 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "main.h"
 #include "main_menu.h"
 #include "debug.h"
+#include "game_assets.h"
+#include "son.h"
 
 void init_debug() {
-	/* background color and main loop functions */
-	SDL_FillRect(screen, NULL,
-				 SDL_MapRGBA(screen->format,
-							 0x00, 0x00, 0x00, 0xFF));
+	/* main loop functions */
 	poll_events = debug_poll_events;
 	update = debug_update;
 	render = debug_render;
-	/* end background color and main loop functions */
+	/* end main loop functions */
 
 	destroy_main_menu();
+
+	if(load_game_assets() == -1) {
+		fprintf(stderr, "Failed to load game assets.\n");
+		exit(-1);
+	}
+
+	son = malloc(sizeof(son_t));
+	if (init_son_t(son, w_width / 2, w_height / 2) == -1) {
+		fprintf(stderr, "Failed to son.\n");
+		exit(-1);
+	}
 }
 
 void debug_poll_events(SDL_Event* event)
@@ -42,14 +54,19 @@ void debug_poll_events(SDL_Event* event)
 
 void debug_update(void)
 {
-	
+	const Uint8* keys = SDL_GetKeyboardState(NULL);
+	update_son_t(son, keys);
 }
 
 void debug_render(void)
 {
-
+	SDL_FillRect(screen, NULL,
+				 SDL_MapRGBA(screen->format,
+							 0xFF, 0xEE, 0xCC, 0xFF));
+	blit_son_t(son, screen);
 }
 
 void destroy_debug() {
-
+	destroy_game_assets();
+	destroy_son_t(&son);
 }
