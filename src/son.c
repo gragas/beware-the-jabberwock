@@ -1,6 +1,7 @@
 #include <assert.h>
 #include "son.h"
 #include "game_assets.h"
+#include "main.h"
 
 int init_son_t(son_t* s, float x, float y) {
 	assert(s);
@@ -13,6 +14,7 @@ int init_son_t(son_t* s, float x, float y) {
 	s->xv = 0;
 	s->yv = 0;
 	s->base_speed = SON_BASE_SPEED;
+	s->running = 0;
 	s->rect.w = s->surf->w;
 	s->rect.h = s->surf->h;
 	s->rect.x = (int)x;
@@ -31,28 +33,25 @@ void blit_son_t(son_t* s, SDL_Surface* dest) {
 }
 
 void update_son_t(son_t* s, const Uint8* keys) {
-	s->xv = 0;
-	s->yv = 0;
+	s->xv = 0.0f;
+	s->yv = 0.0f;
 	
-	if (keys[SDL_SCANCODE_W]) {
-		s->yv = -s->base_speed;
-	}
-	if (keys[SDL_SCANCODE_S]) {
-		s->yv = s->base_speed;
-	}
-	if (keys[SDL_SCANCODE_D]) {
-		s->xv = s->base_speed;
-	}
-	if (keys[SDL_SCANCODE_A]) {
-		s->xv = -s->base_speed;
-	}
+	if (keys[SDL_SCANCODE_W]) s->yv = -s->base_speed;
+	if (keys[SDL_SCANCODE_S]) s->yv = s->base_speed;
+	if (keys[SDL_SCANCODE_D]) s->xv = s->base_speed;
+	if (keys[SDL_SCANCODE_A]) s->xv = -s->base_speed;
+	if (keys[SDL_SCANCODE_LSHIFT]) s->running = 1; else s->running = 0;
 
-	s->x += s->xv;
-	s->y += s->yv;
+	float mult = (float)delta;
+	if (s->running) mult *= SON_RUN_MULTIPLIER;
+
+	s->x += s->xv * mult;
+	s->y += s->yv * mult;
 	s->rect.x = (int)s->x;
 	s->rect.y = (int)s->y;
 	s->shadow_rect.x = (int)s->x - 9;
 	s->shadow_rect.y = (int)(s->y + s->surf->h - 30);
+	s->ticks += delta;
 }
 
 void destroy_son_t(son_t** s) {

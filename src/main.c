@@ -25,7 +25,7 @@ int main() {
 	ticks = 0;
 	
 	while (exit_SDL == 0) {
-		
+
 		poll_events(&event);
 		update();
 		render();
@@ -33,9 +33,9 @@ int main() {
 		SDL_UpdateWindowSurface(window);
 		
 		delta = SDL_GetTicks() - ticks;
+		ticks = SDL_GetTicks();
 		if (delta < ticks_per_frame) {
 			SDL_Delay(ticks_per_frame - delta);
-			ticks = SDL_GetTicks();
 		}
 	}
 	
