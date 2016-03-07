@@ -15,7 +15,7 @@ void partial_exit(void) { destroy_main_menu(); exit(0); }
 void init_main_menu() {
 	#ifdef DEBUG
       #if (DEBUG == 1)
-	main_menu_debug_button = Button(10, 10,
+	main_menu_debug_button = Button(20, 20,
 						  main_menu_debug_button_up,
 						  main_menu_debug_button_down,
 						  init_debug);

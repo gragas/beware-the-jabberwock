@@ -8,6 +8,7 @@ void splash_screen_render(void);
 void destroy_splash_screen(void);
 
 SDL_Surface* splash_screen;
+SDL_Rect splash_screen_rect;
 
 int total_ticks;
 

@@ -14,12 +14,12 @@ int main() {
 		fprintf(stderr, "Failed to initialize game.\n");
 		return EXIT_FAILURE;
 	}
-
+	
 	if (load_assets() != 0) {
 		fprintf(stderr, "Failed to load assets.\n");
 		return EXIT_FAILURE;
 	}
-	
+
 	SDL_Event event;
 
 	ticks = 0;
@@ -103,6 +103,17 @@ int init() {
 	window = SDL_CreateWindow("Beware The Jabberwock",
 							  SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 							  w_width, w_height, SDL_WINDOW_SHOWN | fullscreen);
+
+	if (fullscreen) {
+		SDL_DisplayMode mode = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
+		if (SDL_GetDisplayMode(0, 0, &mode) != 0) {
+			fprintf(stderr, "Could not get display mode.\n");
+			return -1;
+		}
+		w_width = mode.w;
+		w_height = mode.h;
+	}
+	
 	if (window == NULL) {
 		fprintf(stderr, "SDL failed to create window.\n");
 		return -1;		
@@ -118,8 +129,6 @@ int init() {
 	}
 	/* End change the screen format from RGB -> RGBA */
 	
-	init_splash_screen();
-	
 	return 0;
 }
 
@@ -132,6 +141,8 @@ int load_assets() {
 
 	splash_screen = load_image(ASSETS_PATH"/splash_screen/splash_screen.png");
 	if (splash_screen == NULL) return -1;
+
+	init_splash_screen();
 
 	main_menu_debug_button_up = load_image(
 		ASSETS_PATH"/main_menu/debug_button.png");

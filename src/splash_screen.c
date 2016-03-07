@@ -6,13 +6,14 @@
 #include "button.h"
 
 void init_splash_screen() {
-	SDL_FillRect(screen, NULL,
-				 SDL_MapRGBA(screen->format,
-							 0x00, 0x00, 0x22, 0xFF));
 	total_ticks = 0;
 	poll_events = splash_screen_poll_events;
 	update = splash_screen_update;
 	render = splash_screen_render;
+	splash_screen_rect.w = splash_screen->w;
+	splash_screen_rect.h = splash_screen->h;
+	splash_screen_rect.x = (w_width - splash_screen_rect.w) / 2;
+	splash_screen_rect.y = (w_height - splash_screen_rect.h) / 2;
 }
 
 void splash_screen_poll_events(SDL_Event* event) {
@@ -43,7 +44,10 @@ void splash_screen_update(void) {
 }
 
 void splash_screen_render(void) {
-	SDL_BlitSurface(splash_screen, NULL, screen, NULL);
+	SDL_FillRect(screen, NULL,
+				 SDL_MapRGBA(screen->format,
+							 0x00, 0x00, 0x22, 0xFF));
+	SDL_BlitSurface(splash_screen, NULL, screen, &splash_screen_rect);
 }
 
 
