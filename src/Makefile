@@ -25,6 +25,7 @@ $(TARGET): $(OBJECTS)
 clean: clean_emacs
 clean: clean_object_files
 clean: clean_target
+clean: clean_output_files
 
 clean_emacs:
 	rm *~ 2>/dev/null ||:
@@ -34,3 +35,6 @@ clean_object_files:
 
 clean_target:
 	rm -f $(TARGET) 2>/dev/null ||:
+
+clean_output_files:
+	rm output.txt output.png 2>/dev/null ||:
