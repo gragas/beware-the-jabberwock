@@ -1,5 +1,5 @@
 TARGET = a.out
-LIBS = -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lX11 -lpthread -lXrandr -lXi
+LIBS = -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lX11 -lpthread -lXrandr -lXi -lm
 CC = clang
 CFLAGS = -Wall
 
