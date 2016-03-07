@@ -8,8 +8,6 @@ import matplotlib.pyplot as plt
 def output2array():
     array = np.genfromtxt("output.txt")
     array += 128.0
-    plt.bar(np.arange(1024*1024), array.flatten())
-    plt.show()
     return array
 
 def output2image(width, height, gain, octaves, hgrid):
