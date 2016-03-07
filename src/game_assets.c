@@ -28,6 +28,18 @@ int load_game_assets(void) {
 		ASSETS_PATH"/bedrock/sand_4.png");
 	if (bedrock_sand_4 == NULL) return -1;
 
+	son_stationary = malloc(sizeof(SDL_Surface *) * NUM_SON_STATIONARY);
+
+	size_t son_stationary_index;
+	for(son_stationary_index = 0; son_stationary_index < NUM_SON_STATIONARY; son_stationary_index++) {
+		size_t n_bytes = 128;
+		char* buffer = calloc(n_bytes, 1);
+		snprintf(buffer, n_bytes, ASSETS_PATH"/son/stationary_%zu.png", son_stationary_index);
+		son_stationary[son_stationary_index] = load_image(buffer);
+		if(son_stationary[son_stationary_index] == NULL) return -1;
+		free(buffer);
+	}
+
 	son_down = malloc(sizeof(SDL_Surface *) * NUM_SON_DOWN);
 
 	size_t son_down_index;

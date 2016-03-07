@@ -11,7 +11,7 @@ typedef struct Son {
 	SDL_Rect rect, shadow_rect;
 	float x, y, xv, yv;
 	float base_speed;
-	int running;
+	int running, dir;
 	int ticks;
 } son_t;
 

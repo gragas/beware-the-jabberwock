@@ -6,7 +6,9 @@
 int load_game_assets(void);
 void destroy_game_assets(void);
 
-#define NUM_SON_DOWN 1
+#define NUM_SON_STATIONARY 1
+SDL_Surface** son_stationary;
+#define NUM_SON_DOWN 4
 SDL_Surface** son_down;
 SDL_Surface* son_shadow;
 
