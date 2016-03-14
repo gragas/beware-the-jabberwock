@@ -10,6 +10,8 @@ void destroy_game_assets(void);
 SDL_Surface** son_stationary;
 #define NUM_SON_DOWN 4
 SDL_Surface** son_down;
+#define NUM_SON_UP 4
+SDL_Surface** son_up;
 SDL_Surface* son_shadow;
 
 SDL_Surface* bedrock_sand_0;

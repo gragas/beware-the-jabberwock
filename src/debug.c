@@ -27,6 +27,8 @@ void init_debug() {
 		fprintf(stderr, "Failed to son.\n");
 		exit(-1);
 	}
+
+	
 }
 
 void debug_poll_events(SDL_Event* event)

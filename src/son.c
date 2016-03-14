@@ -53,6 +53,9 @@ void update_son_t(son_t* s, const Uint8* keys) {
 		case 0x01: // down
 			s->surf = son_down[(s->ticks / 300) % NUM_SON_DOWN];
 			break;
+		case 0x11: // up
+			s->surf = son_up[(s->ticks / 300) % NUM_SON_UP];
+			break;
 		default:
 			break;
 		}
