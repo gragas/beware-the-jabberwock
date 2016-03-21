@@ -18,13 +18,13 @@ int main(int argc, char* argv[]) {
 		int octaves = atoi(argv[4]);
 		int hgrid = atoi(argv[5]);
 
-		float** array = alloca(sizeof(float*)*height);
-
 		FILE* image_file = fopen("output.txt", "w");
 		if (image_file == NULL) {
 			fprintf(stderr, "Failed open filestream.\n");
 			exit(1);
 		}
+
+		float** array = alloca(sizeof(float*)*height);
 
 		size_t row, col;
 		for (row = 0; row < height; row++) {
