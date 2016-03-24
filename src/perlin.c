@@ -1,7 +1,4 @@
-/* Thanks to http://stackoverflow.com/questions/16569660/2d-perlin-noise-in-c
- * and http://stackoverflow.com/questions/23809404/
- * issue-with-simple-makefile-undefined-reference-to-symbol-cosglibc-2-2-5
- */
+/* Thanks to http://stackoverflow.com/questions/16569660/2d-perlin-noise-in-c */
 #include <stdlib.h>
 #include <math.h>
 #include "perlin.h"
