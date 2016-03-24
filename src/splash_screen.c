@@ -37,7 +37,7 @@ void splash_screen_poll_events(SDL_Event* event) {
 void splash_screen_update(void) {
 	/* Keep track of how long the splash screen has been displayed */
 	total_ticks += delta;
-	if ((total_ticks / ticks_per_frame) / fps >= 3000) {
+	if (total_ticks >= 3000) {
 		init_main_menu();
 	}
 	/* End keep track of how long the splash screen has been displayed */
