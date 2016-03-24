@@ -1,5 +1,5 @@
-#ifndef __PERLIN_H
-#define __PERLIN_H
+#ifndef _PERLIN_H
+#define _PERLIN_H
 
 #include <stdlib.h>
 #include <math.h>

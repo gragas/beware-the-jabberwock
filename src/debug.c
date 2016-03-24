@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include "main.h"
 #include "main_menu.h"
+#include "channel.h"
 #include "debug.h"
 #include "game_assets.h"
 #include "son.h"
@@ -24,11 +25,19 @@ void init_debug() {
 
 	son = malloc(sizeof(son_t));
 	if (init_son_t(son, w_width / 2, w_height / 2) == -1) {
-		fprintf(stderr, "Failed to son.\n");
+		fprintf(stderr, "Failed to initialize son.\n");
 		exit(-1);
 	}
 
-	
+#define TEMPERATURE_HGRID 100
+#define HUMIDITY_HGRID 100
+#define SPIRIT_HGRID 100
+
+	/* initialize channels */
+	init_channel_t(&temperature, TEMPERATURE_HGRID, 70.0f);
+	init_channel_t(&humidity, HUMIDITY_HGRID, 100.0f);
+	init_channel_t(&spirit, SPIRIT_HGRID, 1.0f);
+	/* end initialize channels */
 }
 
 void debug_poll_events(SDL_Event* event)
