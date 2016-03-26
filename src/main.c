@@ -3,6 +3,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 
 #include "main.h"
 #include "utils.h"
@@ -129,6 +130,13 @@ int init() {
 	}
 	/* End change the screen format from RGB -> RGBA */
 	
+	/* Initialize the truetype font API */
+	if (TTF_Init() == -1) {
+		fprintf(stderr, "TTF_Init: %s\n", TTF_GetError());
+		return -1;
+	}
+	/* End initialize the truetype font API */
+
 	return 0;
 }
 
