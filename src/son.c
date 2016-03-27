@@ -26,7 +26,7 @@ int init_son_t(son_t* s, float x, float y) {
 	s->shadow_rect.w = s->shadow->w;
 	s->shadow_rect.h = s->shadow->h;
 	s->shadow_rect.x = (int)x - 5;
-	s->shadow_rect.y = (int)(y + s->surf->h - 5);
+	s->shadow_rect.y = (int)(y + s->surf->h - 12);
 	return 0;
 }
 
@@ -71,10 +71,10 @@ void update_son_t(son_t* s, const Uint8* keys) {
 
 	s->x += s->xv * mult;
 	s->y += s->yv * mult;
-	s->rect.x = (int)s->x;
-	s->rect.y = (int)s->y;
-	s->shadow_rect.x = (int)s->x - 5;
-	s->shadow_rect.y = (int)(s->y + s->surf->h - 12);
+	// s->rect.x = (int)s->x;
+	// s->rect.y = (int)s->y;
+	// s->shadow_rect.x = (int)s->x - 5;
+	// s->shadow_rect.y = (int)(s->y + s->surf->h - 12);
 	s->ticks += delta;
 }
 

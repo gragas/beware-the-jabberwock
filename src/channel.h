@@ -3,6 +3,14 @@
 
 #include "perlin.h"
 
+#define TEMPERATURE_HGRID 100
+#define HUMIDITY_HGRID 100
+#define SPIRIT_HGRID 300
+
+#define TEMPERATURE_RANGE 120.0f
+#define HUMIDITY_RANGE 100.0f
+#define SPIRIT_RANGE 10.0f
+
 typedef struct Channel {
 	int hgrid;
 	float mult;

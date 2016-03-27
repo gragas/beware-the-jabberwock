@@ -9,6 +9,7 @@
 #include "debug.h"
 #include "game_assets.h"
 #include "son.h"
+#include "camera.h"
 
 void init_debug() {
 	/* main loop functions */
@@ -31,13 +32,9 @@ void init_debug() {
 	}
 
 	/* initialize channels */
-    #define TEMPERATURE_HGRID 100
-    #define HUMIDITY_HGRID 100
-    #define SPIRIT_HGRID 300
-
-	init_channel_t(&temperature_channel, TEMPERATURE_HGRID, 70.0f);
-	init_channel_t(&humidity_channel, HUMIDITY_HGRID, 100.0f);
-	init_channel_t(&spirit_channel, SPIRIT_HGRID, 10.0f);
+	init_channel_t(&temperature_channel, TEMPERATURE_HGRID, TEMPERATURE_RANGE);
+	init_channel_t(&humidity_channel, HUMIDITY_HGRID, HUMIDITY_RANGE);
+	init_channel_t(&spirit_channel, SPIRIT_HGRID, SPIRIT_RANGE);
 	/* end initialize channels */
 
 	/* initialize debug labels */
@@ -96,6 +93,10 @@ void init_debug() {
 				 DEFAULT_TTF_FONT_NAME, DEFAULT_TTF_FONT_SIZE,
 				 0x55, 0x55, 0x55, 0xFF);
 	/* end initialize debug labels */
+
+	/* initialize the camera */
+	init_camera();
+	/* end initialize the camera */
 }
 
 void debug_poll_events(SDL_Event* event)
@@ -155,6 +156,13 @@ void debug_update(void)
 		render_text(&spirit_label);
 	}
 	/* End update channels */
+
+	/* Update the camera */
+	update_camera(tile_x, tile_y,
+				  &temperature_channel,
+				  &humidity_channel,
+				  &spirit_channel);
+	/* End update the camera */
 }
 
 void debug_render(void)
@@ -162,6 +170,7 @@ void debug_render(void)
 	SDL_FillRect(screen, NULL,
 				 SDL_MapRGBA(screen->format,
 							 0xFF, 0xEE, 0xCC, 0xFF));
+	blit_map_from_camera(son->x, son->y, screen);
 	blit_son_t(son, screen);
 	blit_label_t(&tile_position_name_label, screen);
 	blit_label_t(&temperature_name_label, screen);

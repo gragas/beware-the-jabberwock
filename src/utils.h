@@ -6,7 +6,7 @@
 
 SDL_Surface* load_image(const char* path);
 
-#define TILE_SIZE 32
+#define TILE_SIZE 24
 
 #ifdef DEBUG
     #if (DEBUG == 0)
