@@ -126,6 +126,7 @@ void debug_update(void)
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
 	update_son_t(son, keys);
 
+	/* Update channels */
 	int temp_tile_x = (int)son->x / TILE_SIZE;
 	int temp_tile_y = (int)son->y / TILE_SIZE;
 	float temp_temperature = channel_get(&temperature_channel, tile_x, tile_y);
@@ -153,6 +154,7 @@ void debug_update(void)
 		snprintf(spirit_buffer, 8, "%.1f", spirit);
 		render_text(&spirit_label);
 	}
+	/* End update channels */
 }
 
 void debug_render(void)

@@ -22,14 +22,9 @@ void splash_screen_poll_events(SDL_Event* event) {
 		{
 			exit_SDL = 1;
 		}
-		else if (event->type == SDL_KEYDOWN)
+		else if (event->type == SDL_KEYDOWN || event->type == SDL_MOUSEBUTTONDOWN)
 		{
-			switch (event->key.keysym.sym)
-			{
-			case SDLK_ESCAPE:
-				init_main_menu();
-				break;
-			}
+			init_main_menu();
 		}
 	}
 }
