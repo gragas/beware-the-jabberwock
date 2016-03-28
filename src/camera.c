@@ -5,9 +5,16 @@
 #include "channel.h"
 #include "main.h"
 
+static SDL_Surface* camera_surf;
 static SDL_Rect camera_rect;
+static int camera_width;
+static int camera_height;
 static int camera_cornerx;
 static int camera_cornery;
+static SDL_Surface* minimap_surf;
+static SDL_Rect minimap_rect;
+static int minimap_width;
+static int minimap_height;
 static int last_cx;
 static int last_cy;
 
@@ -25,6 +32,7 @@ void blit_map_from_camera(float x, float y, SDL_Surface* dest) {
 	camera_rect.x = camera_cornerx - (int)x % TILE_SIZE;
 	camera_rect.y = camera_cornery - (int)y % TILE_SIZE;
 	SDL_BlitSurface(camera_surf, NULL, dest, &camera_rect);
+	SDL_BlitSurface(minimap_surf, NULL, dest, &minimap_rect);
 }
 
 void update_camera(int tile_x, int tile_y,
@@ -45,16 +53,26 @@ static void render_map(int x, int y,
 					   channel_t* temperature_channel,
 					   channel_t* humidity_channel,
 					   channel_t* spirit_channel) {
-	SDL_Rect temp_rect;
-	temp_rect.w = TILE_SIZE;
-	temp_rect.h = TILE_SIZE;
+	SDL_Rect temp_camera_rect, temp_minimap_rect;
+	temp_camera_rect.w = TILE_SIZE;
+	temp_camera_rect.h = TILE_SIZE;
+	temp_minimap_rect.w = MINIMAP_TILE_SIZE;
+	temp_minimap_rect.h = MINIMAP_TILE_SIZE;
 	for (int i = 0; i < camera_width; i++) {
 		for (int j = 0; j < camera_height; j++) {
-			temp_rect.x = i * TILE_SIZE;
-			temp_rect.y = j * TILE_SIZE;
-			SDL_FillRect(camera_surf, &temp_rect,
+			temp_camera_rect.x = i * TILE_SIZE;
+			temp_camera_rect.y = j * TILE_SIZE;
+			SDL_FillRect(camera_surf, &temp_camera_rect,
 						 color_function((i + x) * TILE_SIZE,
 										(j + y) * TILE_SIZE,
+										temperature_channel,
+										humidity_channel,
+										spirit_channel));
+			temp_minimap_rect.x = (MINIMAP_BORDER_SIZE + i) * MINIMAP_TILE_SIZE;
+			temp_minimap_rect.y = (MINIMAP_BORDER_SIZE + j) * MINIMAP_TILE_SIZE;
+			SDL_FillRect(minimap_surf, &temp_minimap_rect,
+						 color_function((i + x) * MINIMAP_TILE_SIZE,
+										(j + y) * MINIMAP_TILE_SIZE,
 										temperature_channel,
 										humidity_channel,
 										spirit_channel));
@@ -82,6 +100,7 @@ static Uint32 color_function(int tile_x, int tile_y,
 }
 
 void init_camera() {
+	/* initialize camera */
 	last_cx = 0;
 	last_cy = 0;
 	if (w_width % TILE_SIZE == 0) camera_width = w_width / TILE_SIZE;
@@ -101,4 +120,21 @@ void init_camera() {
 							 0x00, 0x00, 0x00, 0xFF));
 	camera_rect.w = camera_surf->w;
 	camera_rect.h = camera_surf->h;
+	/* end initialize camera */
+
+	/* initialize minimap */
+	minimap_width = camera_width + 2 * MINIMAP_BORDER_SIZE;
+	minimap_height = camera_height + 2 * MINIMAP_BORDER_SIZE;
+	minimap_rect.x = w_width - 10 - minimap_width * MINIMAP_TILE_SIZE;
+	minimap_rect.y = 10;
+	minimap_surf = SDL_CreateRGBSurface(0,
+										minimap_width * MINIMAP_TILE_SIZE,
+										minimap_height * MINIMAP_TILE_SIZE,
+										32, 0, 0, 0, 0);
+	SDL_FillRect(minimap_surf, NULL,
+				 SDL_MapRGBA(screen->format,
+							 MINIMAP_BORDER_R, MINIMAP_BORDER_G, MINIMAP_BORDER_B, 0xFF));
+	minimap_rect.w = minimap_surf->w;
+	minimap_rect.h = minimap_surf->h;
+	/* end initialize minimap */
 }

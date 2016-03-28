@@ -40,9 +40,9 @@ void init_debug() {
 	/* initialize debug labels */
 	#define DEFAULT_TTF_FONT_NAME FONT_PATH"/LiberationMono-Regular.ttf"
     #define DEFAULT_TTF_FONT_SIZE 18
-	#define DEFAULT_TTF_FONT_X 5
+	#define DEFAULT_TTF_FONT_X 10
 	#define DEFAULT_TTF_FONT_X_OFFSET 200
-	#define DEFAULT_TTF_FONT_Y 5
+	#define DEFAULT_TTF_FONT_Y 10
 	#define DEFAULT_TTF_FONT_Y_OFFSET 25
 	init_label_t(&tile_position_name_label, "Tile Position: ",
 				 DEFAULT_TTF_FONT_X, DEFAULT_TTF_FONT_Y,

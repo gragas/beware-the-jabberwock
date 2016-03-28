@@ -3,9 +3,9 @@
 
 #include "perlin.h"
 
-#define TEMPERATURE_HGRID 100
-#define HUMIDITY_HGRID 100
-#define SPIRIT_HGRID 300
+#define TEMPERATURE_HGRID 5
+#define HUMIDITY_HGRID 10
+#define SPIRIT_HGRID 7
 
 #define TEMPERATURE_RANGE 120.0f
 #define HUMIDITY_RANGE 100.0f
