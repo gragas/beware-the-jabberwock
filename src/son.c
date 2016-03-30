@@ -27,27 +27,34 @@ int init_son_t(son_t* s, float x, float y) {
 	s->shadow_rect.h = s->shadow->h;
 	s->shadow_rect.x = (int)x - 5;
 	s->shadow_rect.y = (int)(y + s->surf->h - 12);
+	s->max_health = SON_BASE_MAX_HEALTH;
+	s->max_energy = SON_BASE_MAX_ENERGY;
+	s->max_spirit = SON_BASE_MAX_SPIRIT;
+	s->health = s->max_health;
+	s->energy = s->max_energy;
+	s->spirit = s->max_spirit;
 	return 0;
 }
 
 void blit_son_t(son_t* s, SDL_Surface* dest) {
-	assert(s);
 	SDL_BlitSurface(s->shadow, NULL, dest, &s->shadow_rect);
 	SDL_BlitSurface(s->surf, NULL, dest, &s->rect);
 }
 
-void update_son_t(son_t* s, const Uint8* keys) {
+/* returns a non-zero number if health, energy, or spirit have changed */
+int update_son_t(son_t* s, const Uint8* keys) {
+	int return_value = 0;
 	s->xv = 0.0f;
 	s->yv = 0.0f;
 	
 	s->dir = 0x00;
-
+	
 	if (keys[SDL_SCANCODE_W]) { s->yv = -s->base_speed; s->dir = 0x11; }
 	if (keys[SDL_SCANCODE_S]) { s->yv =  s->base_speed; s->dir = 0x01; }
 	if (keys[SDL_SCANCODE_D]) { s->xv =  s->base_speed; s->dir = 0x31; }
 	if (keys[SDL_SCANCODE_A]) { s->xv = -s->base_speed; s->dir = 0x21; }
 	if (keys[SDL_SCANCODE_LSHIFT]) s->running = 1; else s->running = 0;
-
+	
 	if (s->dir & 0x01) { // if moving
 		switch(s->dir) {
 		case 0x01: // down
@@ -76,6 +83,7 @@ void update_son_t(son_t* s, const Uint8* keys) {
 	// s->shadow_rect.x = (int)s->x - 5;
 	// s->shadow_rect.y = (int)(s->y + s->surf->h - 12);
 	s->ticks += delta;
+	return return_value;
 }
 
 void destroy_son_t(son_t** s) {

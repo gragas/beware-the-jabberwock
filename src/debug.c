@@ -9,6 +9,7 @@
 #include "debug.h"
 #include "game_assets.h"
 #include "son.h"
+#include "son_hud.h"
 #include "camera.h"
 
 void init_debug() {
@@ -25,11 +26,11 @@ void init_debug() {
 		exit(-1);
 	}
 
-	son = malloc(sizeof(son_t));
-	if (init_son_t(son, w_width / 2, w_height / 2) == -1) {
+	if (init_son_t(&son, w_width / 2, w_height / 2) == -1) {
 		fprintf(stderr, "Failed to initialize son.\n");
 		exit(-1);
 	}
+	init_son_hud_t(&son_hud, &son, SON_HUD_PADDING, w_height - (SON_HUD_HEIGHT + SON_HUD_PADDING) * 3);
 
 	/* initialize channels */
 	init_channel_t(&temperature_channel, TEMPERATURE_HGRID, TEMPERATURE_RANGE);
@@ -137,15 +138,17 @@ void debug_poll_events(SDL_Event* event)
 void debug_update(void)
 {
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
-	update_son_t(son, keys);
-
+	if (update_son_t(&son, keys) != 0) {
+		render_son_hud_t(&son_hud);
+	}
+	
 	/* Update channels */
-	int temp_tile_x = (int)son->x / TILE_SIZE;
-	int temp_tile_y = (int)son->y / TILE_SIZE;
+	int temp_tile_x = (int)son.x / TILE_SIZE;
+	int temp_tile_y = (int)son.y / TILE_SIZE;
 	float temp_temperature = channel_get(&temperature_channel, tile_x, tile_y);
 	float temp_humidity = channel_get(&humidity_channel, tile_x, tile_y);
 	float temp_spirit = channel_get(&spirit_channel, tile_x, tile_y);
-
+	
 	if (temp_tile_x != tile_x || temp_tile_y != tile_y) {
 		tile_x = temp_tile_x;
 		tile_y = temp_tile_y;
@@ -168,7 +171,7 @@ void debug_update(void)
 		render_text(&spirit_label);
 	}
 	/* End update channels */
-
+	
 	/* Update the camera */
 	update_camera(tile_x, tile_y,
 				  &temperature_channel,
@@ -182,8 +185,9 @@ void debug_render(void)
 	SDL_FillRect(screen, NULL,
 				 SDL_MapRGBA(screen->format,
 							 0xFF, 0xEE, 0xCC, 0xFF));
-	blit_map_from_camera(son->x, son->y, screen);
-	blit_son_t(son, screen);
+	blit_map_from_camera(son.x, son.y, screen);
+	blit_son_t(&son, screen);
+	blit_son_hud_t(&son_hud, screen);
 	blit_label_t(&tile_position_name_label, screen);
 	blit_label_t(&temperature_name_label, screen);
 	blit_label_t(&humidity_name_label, screen);
@@ -196,5 +200,4 @@ void debug_render(void)
 
 void destroy_debug() {
 	destroy_game_assets();
-	destroy_son_t(&son);
 }

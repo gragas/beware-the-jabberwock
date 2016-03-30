@@ -4,6 +4,7 @@
 #include "button.h"
 #include "channel.h"
 #include "son.h"
+#include "son_hud.h"
 #include "label.h"
 
 void init_debug();
@@ -12,7 +13,8 @@ void debug_update(void);
 void debug_render(void);
 void destroy_debug(void);
 
-son_t* son;
+son_t son;
+son_hud_t son_hud;
 
 channel_t temperature_channel;
 channel_t humidity_channel;
