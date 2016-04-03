@@ -3,6 +3,7 @@
 #include "main.h"
 #include "main_menu.h"
 #include "splash_screen.h"
+#include "create_character.h"
 
 #ifdef DEBUG
 #if (DEBUG == 1)
@@ -15,23 +16,37 @@ void partial_exit(void) { destroy_main_menu(); exit(0); }
 void init_main_menu() {
 	#ifdef DEBUG
       #if (DEBUG == 1)
-	main_menu_debug_button = Button(20, 20,
-						  main_menu_debug_button_up,
-						  main_menu_debug_button_down,
-						  init_debug);
+	main_menu_debug_button = Button(
+		20, 20,
+		main_menu_debug_button_up,
+		main_menu_debug_button_down,
+		init_debug);
 	main_menu_buttons[0] = main_menu_debug_button;
       #endif
 	#endif
 
-	main_menu_exit_button = Button(w_width / 2, w_height - 50,
-						 main_menu_exit_button_up,
-						 main_menu_exit_button_down,
-						 partial_exit);
-	Button_set_pos(main_menu_exit_button,
-				   main_menu_exit_button->x - main_menu_exit_button->w / 2,
-				   main_menu_exit_button->y);
+	main_menu_exit_button = Button(
+		w_width / 2, w_height / 2 + 50,
+		main_menu_exit_button_up,
+		main_menu_exit_button_down,
+		partial_exit);
+	Button_set_pos(
+		main_menu_exit_button,
+		main_menu_exit_button->x - main_menu_exit_button->w / 2,
+		main_menu_exit_button->y);
 	main_menu_buttons[1] = main_menu_exit_button;
 
+	main_menu_create_character_button = Button(
+		w_width / 2, w_height / 2,
+		main_menu_create_character_button_up,
+		main_menu_create_character_button_down,
+		init_create_character);
+	Button_set_pos(
+		main_menu_create_character_button,
+		main_menu_create_character_button->x - \
+		main_menu_create_character_button->w / 2,
+		main_menu_create_character_button->y);
+	main_menu_buttons[2] = main_menu_create_character_button;	
 
 	/* background color and main loop functions */
 	SDL_FillRect(screen, NULL,

@@ -24,5 +24,9 @@ SDL_Surface* main_menu_debug_button_up;
 SDL_Surface* main_menu_debug_button_down;
 SDL_Surface* main_menu_exit_button_up;
 SDL_Surface* main_menu_exit_button_down;
+SDL_Surface* main_menu_create_character_button_up;
+SDL_Surface* main_menu_create_character_button_down;
+SDL_Surface* create_character_back_button_up;
+SDL_Surface* create_character_back_button_down;
 
 #endif

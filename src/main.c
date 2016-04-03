@@ -168,6 +168,22 @@ int load_assets() {
 		ASSETS_PATH"/main_menu/exit_button_clicked.png");
 	if (main_menu_exit_button_down == NULL) return -1;
 
+	main_menu_create_character_button_up = load_image(
+		ASSETS_PATH"/main_menu/create_character_button.png");
+	if (main_menu_create_character_button_up == NULL) return -1;
+
+	main_menu_create_character_button_down = load_image(
+		ASSETS_PATH"/main_menu/create_character_button_clicked.png");
+	if (main_menu_create_character_button_down == NULL) return -1;
+
+	create_character_back_button_up = load_image(
+		ASSETS_PATH"/create_character/create_character_back_button.png");
+	if (create_character_back_button_up == NULL) return -1;
+
+	create_character_back_button_down = load_image(
+		ASSETS_PATH"/create_character/create_character_back_button_clicked.png");
+	if (create_character_back_button_down == NULL) return -1;
+
 	return 0;
 }
 
