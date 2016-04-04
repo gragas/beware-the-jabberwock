@@ -9,6 +9,8 @@
 #define SON_BASE_MAX_ENERGY 15
 #define SON_BASE_MAX_SPIRIT 10
 
+#define SON_MAX_NAME_BYTES 1024
+
 typedef struct Son {
 	SDL_Surface *surf, *shadow;
 	SDL_Rect rect, shadow_rect;
@@ -18,9 +20,10 @@ typedef struct Son {
 	int ticks;
 	float max_health, max_energy, max_spirit;
 	float health, energy, spirit;
+	char name[1024];
 } son_t;
 
-int init_son_t(son_t* s, float x, float y);
+int init_son_t(son_t* s, char* name, float x, float y);
 void blit_son_t(son_t* s, SDL_Surface* dest);
 int update_son_t(son_t* s, const Uint8* keys);
 void destroy_son_t(son_t** s);

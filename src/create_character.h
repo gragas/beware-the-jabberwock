@@ -9,8 +9,9 @@ void create_character_update(void);
 void create_character_render(void);
 void destroy_create_character(void);
 
-#define NUM_CREATE_CHARACTER_BUTTONS 1
+#define NUM_CREATE_CHARACTER_BUTTONS 2
 button_t* create_character_buttons[NUM_CREATE_CHARACTER_BUTTONS];
 button_t* create_character_back_button;
+button_t* create_character_create_button;
 
 #endif

@@ -4,6 +4,8 @@
 #include "main_menu.h"
 #include "splash_screen.h"
 #include "create_character.h"
+#include "son.h"
+#include "game_assets.h"
 
 #ifdef DEBUG
 #if (DEBUG == 1)
@@ -13,6 +15,15 @@
 
 void partial_exit(void) { destroy_main_menu(); exit(0); }
 
+void partial_init_debug(void) {
+	if(load_game_assets() == -1) {
+		fprintf(stderr, "Failed to load game assets.\n");
+		exit(1);
+	}
+	destroy_main_menu();
+	init_debug(NULL);
+}
+
 void init_main_menu() {
 	#ifdef DEBUG
       #if (DEBUG == 1)
@@ -20,7 +31,7 @@ void init_main_menu() {
 		20, 20,
 		main_menu_debug_button_up,
 		main_menu_debug_button_down,
-		init_debug);
+		partial_init_debug);
 	main_menu_buttons[0] = main_menu_debug_button;
       #endif
 	#endif

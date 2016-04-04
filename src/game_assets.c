@@ -1,12 +1,16 @@
 #include "game_assets.h"
 #include "utils.h"
 
+static int GAME_ASSSETS_LOADED = 0;
+
 /*
    * RETURN VALUE:
    * If this function fails, -1 is returned.
    * Otherwise, 0 is returned.
 */
 int load_game_assets(void) {
+
+	if (GAME_ASSSETS_LOADED) { return 0; }
 
 	bedrock_sand_0 = load_image(
 		ASSETS_PATH"/bedrock/sand_0.png");
@@ -64,6 +68,8 @@ int load_game_assets(void) {
 	son_shadow = load_image(
 		ASSETS_PATH"/son/shadow.png");
 	if (son_shadow == NULL) return -1;
+
+	GAME_ASSSETS_LOADED = 1;
 
 	return 0;
 }

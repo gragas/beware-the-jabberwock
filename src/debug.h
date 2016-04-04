@@ -7,7 +7,7 @@
 #include "son_hud.h"
 #include "label.h"
 
-void init_debug();
+void init_debug(son_t* s);
 void debug_poll_events(SDL_Event* event);
 void debug_update(void);
 void debug_render(void);

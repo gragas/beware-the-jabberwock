@@ -3,16 +3,36 @@
 #include "main.h"
 #include "main_menu.h"
 #include "create_character.h"
+#include "serialize_utils.h"
+#include "debug.h"
+#include "game_assets.h"
 
 void partial_back(void) { destroy_create_character(); init_main_menu(); }
 
+void partial_create(void) {
+	if(load_game_assets() == -1) {
+		fprintf(stderr, "Failed to load game assets.\n");
+		exit(1);
+	}
+	son_t* son = create_son("Created Character", 200.0, 200.0);
+	init_son_hud_t(&son_hud, &son, SON_HUD_PADDING, w_height - (SON_HUD_HEIGHT + SON_HUD_PADDING) * 3);
+	init_debug(son);
+}
+
 void init_create_character() {
 	create_character_back_button = Button(
-		10, w_height - 35,
+		10, w_height - 40,
 		create_character_back_button_up,
 		create_character_back_button_down,
 		partial_back);
 	create_character_buttons[0] = create_character_back_button;
+
+	create_character_create_button = Button(
+		w_width - 125, w_height - 40,
+		create_character_create_button_up,
+		create_character_create_button_down,
+		partial_create);
+	create_character_buttons[1] = create_character_create_button;
 
 	/* background color and main loop functions */
 	SDL_FillRect(screen, NULL,

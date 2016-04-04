@@ -1,10 +1,11 @@
+#include <string.h>
 #include <assert.h>
 #include <stdio.h>
 #include "son.h"
 #include "game_assets.h"
 #include "main.h"
 
-int init_son_t(son_t* s, float x, float y) {
+int init_son_t(son_t* s, char* name, float x, float y) {
 	assert(s);
 	if(son_down[0] == NULL) return -1;
 	if(son_shadow == NULL) return -1;
@@ -14,6 +15,7 @@ int init_son_t(son_t* s, float x, float y) {
 	s->y = y;
 	s->xv = 0;
 	s->yv = 0;
+	strcpy(s->name, name);
 	s->base_speed = SON_BASE_SPEED;
 	s->running = 0;
 	s->dir = 0x00; /* stationary = 0x_0; moving = 0x_1;

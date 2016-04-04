@@ -12,26 +12,23 @@
 #include "son_hud.h"
 #include "camera.h"
 
-void init_debug() {
+void init_debug(son_t* s) {
 	/* main loop functions */
 	poll_events = debug_poll_events;
 	update = debug_update;
 	render = debug_render;
 	/* end main loop functions */
 
-	destroy_main_menu();
-
-	if(load_game_assets() == -1) {
-		fprintf(stderr, "Failed to load game assets.\n");
-		exit(-1);
-	}
-
-	if (init_son_t(&son, w_width / 2, w_height / 2) == -1) {
-		fprintf(stderr, "Failed to initialize son.\n");
-		exit(-1);
+	if (!s) {
+		if (init_son_t(&son, "Tom", w_width / 2 - 7, w_height / 2 - 27) == -1) {
+			fprintf(stderr, "Failed to initialize son.\n");
+			exit(-1);
+		}
+	} else {
+		son = *s;
 	}
 	init_son_hud_t(&son_hud, &son, SON_HUD_PADDING, w_height - (SON_HUD_HEIGHT + SON_HUD_PADDING) * 3);
-
+	
 	/* initialize channels */
 	init_channel_t(&temperature_channel, TEMPERATURE_HGRID, TEMPERATURE_RANGE);
 	init_channel_t(&humidity_channel, HUMIDITY_HGRID, HUMIDITY_RANGE);

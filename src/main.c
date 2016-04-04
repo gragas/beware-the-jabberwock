@@ -184,6 +184,14 @@ int load_assets() {
 		ASSETS_PATH"/create_character/create_character_back_button_clicked.png");
 	if (create_character_back_button_down == NULL) return -1;
 
+	create_character_create_button_up = load_image(
+		ASSETS_PATH"/create_character/create_character_create_button.png");
+	if (create_character_create_button_up == NULL) return -1;
+
+	create_character_create_button_down = load_image(
+		ASSETS_PATH"/create_character/create_character_create_button_clicked.png");
+	if (create_character_create_button_down == NULL) return -1;
+
 	return 0;
 }
 
