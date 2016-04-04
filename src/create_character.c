@@ -15,7 +15,6 @@ void partial_create(void) {
 		exit(1);
 	}
 	son_t* son = create_son("Created Character", 200.0, 200.0);
-	init_son_hud_t(&son_hud, &son, SON_HUD_PADDING, w_height - (SON_HUD_HEIGHT + SON_HUD_PADDING) * 3);
 	init_debug(son);
 }
 

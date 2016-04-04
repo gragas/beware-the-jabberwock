@@ -3,6 +3,7 @@
 
 #include <SDL2/SDL.h>
 #include "son.h"
+#include "label.h"
 
 #define SON_HUD_WIDTH 150
 #define SON_HUD_HEIGHT 20
@@ -19,6 +20,7 @@
 #define SON_HUD_A 0xFF
 
 typedef struct son_hud {
+	label_t name_label;
 	SDL_Surface *health_surf, *energy_surf, *spirit_surf;
 	SDL_Rect health_rect, energy_rect, spirit_rect;
 	son_t* son;
